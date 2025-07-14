@@ -7,10 +7,10 @@ const Dashboard = () => {
   const { expenses, error, loading } = useExpenses();
 
   return (
-    <div>
+    <div className="container">
       {loading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      <ExpenseList expenses={expenses} />;
+      <ExpenseList expenses={expenses} />
     </div>
   );
 };
