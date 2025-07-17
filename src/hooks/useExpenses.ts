@@ -6,8 +6,8 @@ import { getExpenses } from "../services/expense-service";
 
 const useExpenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     setLoading(true);
     getExpenses()
