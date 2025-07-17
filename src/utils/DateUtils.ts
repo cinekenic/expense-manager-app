@@ -24,15 +24,17 @@ class DateUtils {
     return `${dayName}, ${day} ${month} ${year}`;
   }
 
-  static formatDateString(dateString: string) {
-    if (!dateString != undefined) {
-      const date = new Date(dateString);
-      return new Intl.DateTimeFormat("pl-PL", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date);
-    }
+  static formatDateString(dateString: string): string {
+    if (!dateString) return "Nieznana data";
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "Niepoprawna data";
+
+    return new Intl.DateTimeFormat("pl-PL", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(date);
   }
 }
 export default DateUtils;
