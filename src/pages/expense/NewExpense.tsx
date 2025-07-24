@@ -5,31 +5,52 @@ import type { Expense } from "../../model/Expense";
 import expenseValidationSchema from "../../validation/expenseValidationSchema";
 import { expoenseCategories } from "../../utils/AppConstants";
 import Dropdown from "../../components/Dropdown";
-import { saveOrUpdateExpense } from "../../services/expense-service";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { getExpenseByExpenseId, saveOrUpdateExpense } from "../../services/expense-service";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const NewExpense = () => {
+  const { expenseId } = useParams<{ expenseId: string }>();
   const navigate = useNavigate();
-  const [error, setError] = useState<string>("");
+  const [error, setErrors] = useState<string>("");
+  const [isLoading, setLoader] = useState<boolean>(false);
+  const [initialValues, setInitialValues] = useState<Expense>({
+    name: "",
+    amount: 0,
+    note: "",
+    category: "",
+    date: new Date().toISOString().split("T")[0],
+  });
+
+  useEffect(() => {
+    if (expenseId) {
+      setLoader(true);
+      getExpenseByExpenseId(expenseId)
+        .then((response) => {
+          if (response && response.data) {
+            setInitialValues(response.data);
+          }
+        })
+        .catch((error) => setErrors(error.message))
+        .finally(() => setLoader(false));
+    }
+  }, [expenseId]);
 
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      amount: 0,
-      note: "",
-      category: "",
-      date: new Date().toISOString().split("T")[0],
-    },
+    initialValues: initialValues,
+    enableReinitialize: true,
+    validateOnBlur: true,
     onSubmit: (values: Expense) => {
       saveOrUpdateExpense(values)
         .then((res) => {
           if (res && res.status === 201) {
             navigate("/");
+          } else if (res && res.status === 200) {
+            navigate(`/view/${expenseId}`);
           }
         })
         .catch((error) => {
-          setError(error.message);
+          setErrors(error.message);
         });
     },
     validationSchema: expenseValidationSchema,
@@ -39,6 +60,7 @@ const NewExpense = () => {
     <div className="d-flex justify-content-center align-items-center mt-2">
       <div className="container col-md-4 col-sm-8 col-xs-12">
         {error && <p className="text-danger fst-italic">{error}</p>}
+        {isLoading && <p>Loading...</p>}
         <form onSubmit={formik.handleSubmit}>
           {/* Name */}
           <div className="mb-3">
