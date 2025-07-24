@@ -61,7 +61,7 @@ const ExpenseDetails = () => {
           <table className="table table-borderless table-responsive">
             <tbody>
               <tr>
-                <th>Name</th>
+                <th>Name!</th>
                 <td>{expense ? expense.name : "N/A"}</td>
               </tr>
               <tr>
