@@ -1,17 +1,16 @@
 /** @format */
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import type { AuthRequest } from "../model/AuthRequest";
 import { authenticate } from "../services/auth-service";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./useAuthContext";
+import type { AuthRequest } from "../model/AuthRequest";
 
 export const useLogin = () => {
   const [error, setError] = useState<string>("");
   const [isLoading, setLoader] = useState<boolean>(false);
   const navigate = useNavigate();
   const { updateAuth } = useAuthContext();
-
   const login = (authRequest: AuthRequest) => {
     setLoader(true);
     authenticate(authRequest)
@@ -29,10 +28,5 @@ export const useLogin = () => {
       })
       .finally(() => setLoader(false));
   };
-
   return { error, isLoading, login };
 };
-
-// function useAuthContext(): { updateAuth: any } {
-//   throw new Error("Function not implemented.");
-// }

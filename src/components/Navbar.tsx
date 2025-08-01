@@ -4,14 +4,11 @@ import { FaBars } from "react-icons/fa";
 import Logo from "./Logo";
 import { NavLink } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useSignout } from "../hooks/useSignout";
 
 const Navbar = () => {
-  const { isAuthenticated, updateAuth } = useAuthContext();
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    updateAuth(false);
-  };
+  const { isAuthenticated } = useAuthContext();
+  const { logout } = useSignout();
 
   return (
     <nav className="navbar navbar-expand-lg">
@@ -45,13 +42,11 @@ const Navbar = () => {
               </NavLink>
             </>
           ) : null}
-
           {isAuthenticated ? (
-            <button className="btn btn-sm app-primary-bg-color btn-outline-light" onClick={handleLogout}>
+            <button className="btn btn-sm app-primary-bg-color btn-outline-light" onClick={logout}>
               Logout
             </button>
           ) : null}
-
           <button
             className="navbar-toggler"
             type="button"
