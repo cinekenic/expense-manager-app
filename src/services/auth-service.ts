@@ -1,7 +1,5 @@
 /** @format */
 
-// auth-service.ts
-
 import apiClient from "../config/api-client";
 import type { AuthRequest } from "../model/AuthRequest";
 import type { AuthResponse } from "../model/AuthResponse";
@@ -13,4 +11,8 @@ export const createProfile = (profile: Profile) => {
 
 export const authenticate = (authRequest: AuthRequest) => {
   return apiClient.post<AuthResponse>("/login", authRequest);
+};
+
+export const signout = () => {
+  return apiClient.post<void>("/signout");
 };
