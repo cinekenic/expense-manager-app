@@ -116,7 +116,7 @@ const Register = () => {
               Loading...
             </button>
           ) : (
-            <button className="btn btn-sm app-primary-bg-color btn-outline-light" type="submit">
+            <button className="btn btn-sm app-primary-bg-color btn-outline-light mx-1" type="submit">
               Register
             </button>
           )}
