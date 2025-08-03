@@ -1,6 +1,6 @@
 /** @format */
 
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Login from "./pages/login/Login";
@@ -12,8 +12,9 @@ import { useAuthContext } from "./hooks/useAuthContext";
 
 const App = () => {
   const { isAuthenticated } = useAuthContext();
+
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Routes>
         <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
@@ -24,7 +25,7 @@ const App = () => {
         <Route path="/edit/:expenseId" element={isAuthenticated ? <NewExpense /> : <Navigate to="/login" />} />
         <Route path="/reports" element={isAuthenticated ? <ExpenseReports /> : <Navigate to="/login" />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
