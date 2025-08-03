@@ -20,7 +20,6 @@ const ExpenseDetails = () => {
   const { expense, errors, isLoading, setLoader, setErrors } = useExpenseByExpenseId(expenseId!);
 
   const handleCancel = () => {
-    console.log("Dialog cancelled");
     setShowDialog(false);
   };
 
@@ -39,7 +38,6 @@ const ExpenseDetails = () => {
         setLoader(false);
         setShowDialog(false);
       });
-    console.log("Dialog confirmed");
     setShowDialog(false);
   };
 
@@ -72,7 +70,7 @@ const ExpenseDetails = () => {
               </tr>
               <tr>
                 <th>Amount</th>
-                <td>{expense ? CurrencyUtils.formatToPLN(expense?.amount) : "N/A"}</td>
+                <td>{expense ? CurrencyUtils.formatToPLN(parseFloat(expense.amount)) : "N/A"}</td>
               </tr>
               <tr>
                 <th>Date</th>

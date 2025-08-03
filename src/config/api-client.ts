@@ -1,6 +1,7 @@
 /** @format */
 
 import axios from "axios";
+import type { AuthResponse } from "../model/AuthResponse";
 
 // const apiClient = axios.create({
 //   baseURL: "http://localhost:8080/api/v1",
@@ -9,5 +10,19 @@ import axios from "axios";
 const apiClient = axios.create({
   baseURL: "https://expense-manager-restapi.onrender.com/api/v1",
 });
+
+apiClient.interceptors.request.use(
+  (config) => {
+    if (!config.url?.includes("/login") && !config.url?.includes("/register")) {
+      const authObject = localStorage.getItem("user");
+      if (authObject) {
+        const { token } = JSON.parse(authObject) as AuthResponse;
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default apiClient;

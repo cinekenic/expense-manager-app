@@ -15,7 +15,7 @@ html {
 
 nav,
 .app-primary-bg-color {
-  background-color: #79589f;
+  background-color: #79589f !important;
 }
 
 .card-body {
@@ -34,4 +34,14 @@ nav,
 .navbar-toggler {
   color: #fff;
   border-color: #fff;
+}
+
+.login-background {
+  background-image: url("../src/assets/login-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
